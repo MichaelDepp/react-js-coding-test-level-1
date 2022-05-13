@@ -17,7 +17,7 @@ const DetailCard = (props) => {
 			<table>
 				<tr>
 					<th>Name</th>
-					<th>Base Stat</th>
+					<th>Base Stats</th>
 				</tr>
 				{stats.map((stat, index) => (
 					<tr key={index}>
