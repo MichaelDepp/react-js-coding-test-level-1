@@ -6,19 +6,29 @@ import Modal from 'react-modal';
 
 import DetailCard from './components/DetailCard';
 import ThumbnailCard from './components/ThumbnailCard';
+import { GrLinkNext, GrLinkPrevious } from 'react-icons/gr';
 
 function PokeDex() {
 	const [pokemons, setPokemons] = useState([]);
+	const [currentPokemonList, setCurrentPokemonList] = useState([]);
 	const [pokemonDetail, setPokemonDetail] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
+	const [nextLink, setNextLink] = useState('');
+	const [prevLink, setPrevLink] = useState('');
+	const [search, setSearch] = useState('');
+	const [notfound, setNotfound] = useState(false);
+	const [pokemonApi, setPokemonApi] = useState('https://pokeapi.co/api/v2/pokemon');
 
 	useEffect(() => {
-		axios.get('https://pokeapi.co/api/v2/pokemon').then((response) => {
-			console.log(response.data.results);
+		axios.get(pokemonApi).then((response) => {
+			console.log(response);
 			setPokemons(response.data.results);
-			setIsLoading(false);
+			setCurrentPokemonList(response.data.results);
+			setNextLink(response.data.next);
+			setPrevLink(response.data.previous);
 		});
-	}, []);
+		setIsLoading(false);
+	}, [pokemonApi]);
 
 	const customStyles = {
 		content: {
@@ -34,12 +44,32 @@ function PokeDex() {
 		overlay: { backgroundColor: 'rgba(0, 0, 0, 0.7)' },
 	};
 
+	const handleChange = (e) => {
+		setSearch(e.target.value);
+		if (e.target.value === '') {
+			setPokemons(currentPokemonList);
+		} else {
+			const searchedPokemon = pokemons.find((pokemon) => pokemon.name.includes(e.target.value));
+			console.log(searchedPokemon);
+			if (searchedPokemon) {
+				setNotfound(false);
+				setPokemons([searchedPokemon]);
+			} else {
+				setNotfound(true);
+			}
+		}
+	};
+
 	const onClickPokemon = (url) => {
 		axios.get(url).then((response) => {
 			console.log(response.data);
 			setPokemonDetail(response.data);
 		});
 	};
+
+	const onClickNext = () => setPokemonApi(nextLink);
+
+	const onClickPrev = () => setPokemonApi(prevLink);
 
 	if (!isLoading && pokemons.length === 0) {
 		return (
@@ -73,24 +103,31 @@ function PokeDex() {
 						<div className="App">
 							<header className="App-header">
 								<ReactLoading />
-								{/* <b>Implement loader here</b> */}
 							</header>
 						</div>
 					</>
 				) : (
 					<>
 						<h1>Welcome to pokedex !</h1>
+						<div className="search-box">
+							<GrLinkPrevious style={{ cursor: 'pointer' }} size={25} onClick={onClickPrev} />
+							<input
+								className="search-input"
+								type="text"
+								name="search"
+								placeholder="Search Pokemon"
+								onKeyUp={handleChange}
+							/>
+							<GrLinkNext style={{ cursor: 'pointer' }} size={25} onClick={onClickNext} />
+						</div>
+						{notfound && <p className="couldnt-find">Couldn't find the searched pokemon!</p>}
 						{pokemons && (
 							<div className="list-container">
 								{pokemons.map((pokemon, index) => (
-									<ThumbnailCard onClick={() => onClickPokemon(pokemon.url)} index={index} name={pokemon.name} />
+									<ThumbnailCard key={index} onClick={() => onClickPokemon(pokemon.url)} name={pokemon.name} />
 								))}
 							</div>
 						)}
-						{/* <b key={index} onClick={() => onClickPokemon(pokemon.url)}>
-							{pokemon.name}
-						</b> */}
-						{/* <b>Implement Pokedex list here</b> */}
 					</>
 				)}
 			</header>

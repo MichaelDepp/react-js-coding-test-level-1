@@ -45,8 +45,40 @@
   justify-items: center;
 }
 
+.search-box {
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.search-input {
+  width: 100%;
+  padding: 8px;
+}
+
+.couldnt-find {
+  font-size: medium;
+  color: red;
+  margin-bottom: 30px;
+}
+
 @media only screen and (min-width: 770px) {
   .list-container {
     max-width: 1280px;
   }
+
+  .search-box {
+    max-width: 1080px;
+    margin-bottom: 40px;
+  }
+
+  .search-input {
+    width: 40%;
+    padding: 8px;
+  }
+}
+
+.react-icons {
+  color: white
 }
