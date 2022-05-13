@@ -3,7 +3,7 @@ import './ThumbnailCard.css'
 
 const ThumbnailCard = (props) => {
   return (
-    <div className='item-card' onClick={props.onClick}>
+    <div key={props.index} className='item-card' onClick={props.onClick}>
       <div className='img-box'>
         <img className='item-img' src='./pokeball.png' alt='item thumbnail'/>
       </div>
