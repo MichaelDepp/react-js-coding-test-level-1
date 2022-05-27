@@ -112,7 +112,12 @@ function PokeDex() {
 					<>
 						<h1>Welcome to pokedex !</h1>
 						<div className="search-box">
-							<MdNavigateBefore style={{ cursor: 'pointer' }} size={30} onClick={onClickPrev} />
+							<MdNavigateBefore
+								style={{ cursor: prevLink && 'pointer' }}
+								color={prevLink ? 'yellow' : 'grey'}
+								size={30}
+								onClick={onClickPrev}
+							/>
 							<input
 								className="search-input"
 								type="text"
@@ -120,7 +125,12 @@ function PokeDex() {
 								placeholder="Search Pokemon"
 								onKeyUp={handleChange}
 							/>
-							<MdNavigateNext style={{ cursor: 'pointer' }} size={30} onClick={onClickNext} />
+							<MdNavigateNext
+								style={{ cursor: nextLink && 'pointer' }}
+								color={nextLink ? 'yellow' : 'grey'}
+								size={30}
+								onClick={onClickNext}
+							/>
 						</div>
 						{notfound && <p className="couldnt-find">Couldn't find the searched pokemon!</p>}
 						{pokemons && (
