@@ -6,7 +6,7 @@ import Modal from 'react-modal';
 
 import DetailCard from './components/DetailCard';
 import ThumbnailCard from './components/ThumbnailCard';
-import { GrLinkNext, GrLinkPrevious } from 'react-icons/gr';
+import { MdNavigateNext, MdNavigateBefore } from 'react-icons/md';
 
 function PokeDex() {
 	const [pokemons, setPokemons] = useState([]);
@@ -110,7 +110,7 @@ function PokeDex() {
 					<>
 						<h1>Welcome to pokedex !</h1>
 						<div className="search-box">
-							<GrLinkPrevious style={{ cursor: 'pointer' }} size={25} onClick={onClickPrev} />
+							<MdNavigateBefore style={{ cursor: 'pointer' }} size={30} onClick={onClickPrev} />
 							<input
 								className="search-input"
 								type="text"
@@ -118,7 +118,7 @@ function PokeDex() {
 								placeholder="Search Pokemon"
 								onKeyUp={handleChange}
 							/>
-							<GrLinkNext style={{ cursor: 'pointer' }} size={25} onClick={onClickNext} />
+							<MdNavigateNext style={{ cursor: 'pointer' }} size={30} onClick={onClickNext} />
 						</div>
 						{notfound && <p className="couldnt-find">Couldn't find the searched pokemon!</p>}
 						{pokemons && (
