@@ -48,12 +48,14 @@ function PokeDex() {
 		setSearch(e.target.value);
 		if (e.target.value === '') {
 			setPokemons(currentPokemonList);
+			setNotfound(false);
 		} else {
-			const searchedPokemon = pokemons.find((pokemon) => pokemon.name.includes(e.target.value));
-			console.log(searchedPokemon);
-			if (searchedPokemon) {
+			const searchedPokemon = currentPokemonList.filter((value) => {
+				return value.name.toLowerCase().includes(e.target.value.toLowerCase());
+			});
+			if (searchedPokemon.length > 0) {
 				setNotfound(false);
-				setPokemons([searchedPokemon]);
+				setPokemons(searchedPokemon);
 			} else {
 				setNotfound(true);
 			}
