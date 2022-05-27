@@ -113,7 +113,7 @@ function PokeDex() {
 						<h1>Welcome to pokedex !</h1>
 						<div className="search-box">
 							<MdNavigateBefore
-								style={{ cursor: prevLink && 'pointer' }}
+								style={{ cursor: prevLink ? 'pointer' : 'default' }}
 								color={prevLink ? 'yellow' : 'grey'}
 								size={30}
 								onClick={onClickPrev}
@@ -126,7 +126,7 @@ function PokeDex() {
 								onKeyUp={handleChange}
 							/>
 							<MdNavigateNext
-								style={{ cursor: nextLink && 'pointer' }}
+								style={{ cursor: nextLink ? 'pointer' : 'default' }}
 								color={nextLink ? 'yellow' : 'grey'}
 								size={30}
 								onClick={onClickNext}
