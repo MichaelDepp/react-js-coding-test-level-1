@@ -30,6 +30,23 @@ function PokeDex() {
 		setIsLoading(false);
 	}, [pokemonApi]);
 
+	useEffect(() => {
+		if (search === '') {
+			setPokemons(currentPokemonList);
+			setNotfound(false);
+		} else {
+			const searchedPokemon = currentPokemonList.filter((value) => {
+				return value.name.toLowerCase().includes(search.toLowerCase());
+			});
+			if (searchedPokemon.length > 0) {
+				setNotfound(false);
+				setPokemons(searchedPokemon);
+			} else {
+				setNotfound(true);
+			}
+		}
+	}, [search, currentPokemonList]);
+
 	const customStyles = {
 		content: {
 			top: '50%',
@@ -44,23 +61,7 @@ function PokeDex() {
 		overlay: { backgroundColor: 'rgba(0, 0, 0, 0.7)' },
 	};
 
-	const handleChange = (e) => {
-		setSearch(e.target.value);
-		if (e.target.value === '') {
-			setPokemons(currentPokemonList);
-			setNotfound(false);
-		} else {
-			const searchedPokemon = currentPokemonList.filter((value) => {
-				return value.name.toLowerCase().includes(e.target.value.toLowerCase());
-			});
-			if (searchedPokemon.length > 0) {
-				setNotfound(false);
-				setPokemons(searchedPokemon);
-			} else {
-				setNotfound(true);
-			}
-		}
-	};
+	const handleChange = (e) => setSearch(e.target.value);
 
 	const onClickPokemon = (url) => {
 		axios.get(url).then((response) => {
